@@ -330,6 +330,10 @@
 						<div class="paraSm pb32 clrgreen">Ensure you have reserved the date in the google calendar,
 							which will give you all the information needed for a unique stay
 							tiny cabin</div>
+<!-- 						TO ADD PRICE DYNAMICALLY ADD THIS DIV AND BELOW CODE -->
+						<div class="price-container" id="shack_stack">
+							Price : <span class="price"> Loading... </span>
+						</div>
 						<a href="#" class="small_button payment_url" data-id="shack_stack">STAY A LONG WEEKEND AT THE SHACK</a>
 					</div>	
 				</div>
@@ -509,8 +513,42 @@
     <script src="js/jquery.waypoints.min.js"></script>
     <script src="js/aos.js"></script>
     <script src="js/main.js"></script>
+
+<!-- Firebase -->
+
+	<script src="https://www.gstatic.com/firebasejs/8.8.1/firebase-app.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/8.8.1/firebase-firestore.js"></script>
+	<script src="js/firebase.js"></script>
+
+	  
 	<script type="text/javascript">
 		jQuery( document ).ready(function() {
+
+			// Dynamically Show Price 
+
+			$(".price-container").each(function () {
+				var containerID = $(this).attr("id"); // Get the ID of the current container
+				var priceSpan = $(this).find(".price"); // Find the price span inside the container
+				// Retrieve data from Firebase based on the container ID
+				const docRef = db.collection("packages").doc(containerID);
+				docRef
+					.get()
+					.then((doc) => {
+						if (doc.exists) {
+							const price
+								=
+								doc.data().price; // Assuming 'price' is a field in your 'packages' documents
+							priceSpan.text(price); // Update the text of the span with the fetched price
+						} else {
+							console.log("No such document!");
+						}
+					})
+					.catch((error) => {
+						console.error("Error getting document:", error);
+					});
+			});
+
+			
 			jQuery(".custom_point_list .custom_point_click").click(function(){
 				jQuery(".custom_point_click").removeClass("click_active");
 				jQuery(this).addClass("click_active");
