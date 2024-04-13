@@ -1841,3 +1841,8 @@ ul.sidmtop  li a.headingr3{font-size: 20px;}
 
 .list-unstyled.link a{text-decoration: underline;}
 .list-unstyled.link a.nodashunder {text-decoration: none;}
+
+
+.custom_site_menu .site-header__reservations-list .site-header__reservations-link .caption{font-size: 13px;}
+
+.inline-p-contain{display: inline-block;}
